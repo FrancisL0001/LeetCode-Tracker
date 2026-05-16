@@ -1,0 +1,11 @@
+pytest
+pytest-cov
+dotenv
+psycopg2-binary
+sqlalchemy
+pydantic
+fastapi
+uvicorn
+typing
+requests
+datetime

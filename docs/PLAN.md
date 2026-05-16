@@ -27,6 +27,7 @@ type Difficulty = "Easy" | "Medium" | "Hard";
 interface Problem {
     title: string;
     difficulty: Difficulty;
+    description: string; // A brief description of the problem (e.g. "Given an array of integers, return the indices of the two numbers that add up to a specific target.")
     url: string;
     dateSolved: Date;
     solution: string; // This could be a link to a GitHub gist, a blog post, etc.
