@@ -19,8 +19,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import get_db, Base, engine
 from model import Problem
-from schemas import ProblemCreate, ProblemUpdate, ProblemDelete, ProblemResponse
+from schemas import ProblemCreate, ProblemUpdate, ProblemDelete, ProblemResponse, StatsResponse, DifficultyLevel
 from typing import List, Optional
+from datetime import date
 import os
 
 
@@ -92,3 +93,35 @@ def update_problem(problem : ProblemUpdate, db : Session = Depends(get_db)):
     db.refresh(db_problem)
 
     return db_problem
+
+# Get problem statistics
+@app.get("/problems/stats", response_model=StatsResponse)
+def get_stats(
+    topic: Optional[str] = None,
+    start_date: Optional[date] = None,
+    end_date: Optional[date] = None,
+    db: Session = Depends(get_db)
+):
+    query = db.query(Problem)
+    if topic:
+        query = query.filter(Problem.topic == topic)
+    if start_date:
+        query = query.filter(Problem.dateSolved >= str(start_date))
+    if end_date:
+        query = query.filter(Problem.dateSolved <= str(end_date))
+
+    problems = query.all()
+
+    # Pre-populate all difficulty levels with 0 so missing ones still appear in the response
+    by_difficulty = {level.value: 0 for level in DifficultyLevel}
+    by_topic: dict = {}
+    for p in problems:
+        # dateSolved is stored as a string in the DB, so date comparisons above are lexicographic (safe for ISO format)
+        by_difficulty[p.difficulty] += 1
+        by_topic[p.topic] = by_topic.get(p.topic, 0) + 1
+
+    return StatsResponse(
+        totalProblems=len(problems),
+        problemsByDifficulty=by_difficulty,
+        problemsByTopic=by_topic,
+    )

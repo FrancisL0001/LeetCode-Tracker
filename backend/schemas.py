@@ -54,3 +54,9 @@ class ProblemResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+# Schema for Stats Response
+class StatsResponse(BaseModel):
+    totalProblems: int
+    problemsByDifficulty: dict
+    problemsByTopic: dict
