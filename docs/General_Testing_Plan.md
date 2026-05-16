@@ -28,3 +28,24 @@ Most of these tests will be performed using a test database to ensure that the t
 
 ### Database Testing
 
+## Additional Behaviors to Test (identified during implementation)
+
+### Duplicate problem submissions
+- Submitting a problem with the same title as an existing problem must return 409.
+- Submitting a problem with the same URL as an existing problem (different title) must return 409.
+
+### Pagination on GET /problems/
+- `skip` parameter correctly offsets results.
+- `limit` parameter correctly caps results.
+- Combined `skip` + `limit` behaves correctly.
+
+### Stats endpoint filters
+- `GET /problems/stats?topic=...` returns statistics scoped to that topic only.
+- `GET /problems/stats?start_date=YYYY-MM-DD` excludes problems solved before that date.
+- `GET /problems/stats?end_date=YYYY-MM-DD` excludes problems solved after that date.
+- `GET /problems/stats?start_date=...&end_date=...` returns statistics for the range only.
+
+## Known gaps (out of scope for current test pass)
+- `GET /problems/` does not support filtering by `difficulty` despite the plan specifying it.
+- URL validation only checks that the value is a valid HTTP URL; LeetCode-specific validation is not implemented.
+- `solution` is `NOT NULL` in the model but `Optional` in the `ProblemCreate` schema — omitting it would cause a DB-level error rather than a validation error.

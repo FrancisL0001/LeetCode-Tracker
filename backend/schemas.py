@@ -6,7 +6,7 @@ Pydantic schemas for request and response validation.
 
 from pydantic import BaseModel, HttpUrl, field_validator
 from datetime import date
-from sqlalchemy import Enum
+from enum import Enum
 from typing import Optional
 
 class DifficultyLevel(str, Enum):

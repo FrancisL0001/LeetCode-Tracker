@@ -17,6 +17,7 @@ Module uses FastAPI and SQLAlchemy for database interactions with PostgreSQL.
 from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from database import get_db, Base, engine
 from model import Problem
 from schemas import ProblemCreate, ProblemUpdate, ProblemDelete, ProblemResponse, StatsResponse, DifficultyLevel
@@ -49,9 +50,14 @@ Problem Management Endpoints
 # Create a new problem
 @app.post("/problems/", response_model=ProblemResponse)
 def create_problem(problem: ProblemCreate, db: Session = Depends(get_db)):
-    db_problem = Problem(**problem.model_dump())
+    # mode='json' converts HttpUrl → str and enum members → their values
+    db_problem = Problem(**problem.model_dump(mode='json'))
     db.add(db_problem)
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="A problem with this title or URL already exists")
     db.refresh(db_problem)
     return db_problem
 
@@ -86,7 +92,7 @@ def update_problem(problem : ProblemUpdate, db : Session = Depends(get_db)):
     
     # Update only the existing/provided attributes in db_problem
 
-    for key, value in problem.model_dump(exclude_unset=True).items():
+    for key, value in problem.model_dump(mode='json', exclude_unset=True).items():
         setattr(db_problem, key, value)
     
     db.commit()
