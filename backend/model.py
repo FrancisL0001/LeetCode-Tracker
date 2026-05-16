@@ -18,13 +18,10 @@ MVP features:
 from sqlalchemy import Column, Integer, String, Boolean, Enum
 from datetime import datetime
 from database import Base
-
-class DifficultyLevel(Enum):
-    EASY = "Easy"
-    MEDIUM = "Medium"
-    HARD = "Hard"
+from schemas import DifficultyLevel
 
 
+# Definition of my problem entities for the database
 class Problem(Base):
 
     __tablename__ = 'problems' 
@@ -35,5 +32,6 @@ class Problem(Base):
     description = Column(String, nullable=False)
     url = Column(String, nullable=False, unique=True)
     dateSolved = Column(String, nullable=True)
-    notes = Column(String, nullable=True)
+    solution = Column(String, nullable=False) # solution for the problem, can be a typed explanation or the url to the solution
+    notes = Column(String, nullable=True) # Notes on the problem
 

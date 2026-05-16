@@ -7,6 +7,7 @@ Pydantic schemas for request and response validation.
 from pydantic import BaseModel, HttpUrl, field_validator
 from datetime import date
 from sqlalchemy import Enum
+from typing import Optional
 
 class DifficultyLevel(str, Enum):
     EASY = "Easy"
@@ -19,20 +20,34 @@ class ProblemCreate(BaseModel):
     difficulty: DifficultyLevel
     description: str
     url: HttpUrl
-    dateSolved: date | None = None
-    solution: str | None = None
-    notes: str | None = None
+    dateSolved: Optional[date] = None
+    solution: Optional[str] = None
+    notes: Optional[str] = None
 
 # Schema for Updating a Problem
 class ProblemUpdate(BaseModel):
-    difficulty: DifficultyLevel | None = None
-    description: str | None = None
-    url: HttpUrl | None = None
-    dateSolved: date | None = None
-    solution: str | None = None
-    notes: str | None = None
+    title : str
+    difficulty: Optional[DifficultyLevel] = None
+    description: Optional[str] = None
+    url: Optional[HttpUrl] = None
+    dateSolved: Optional[date] = None
+    solution: Optional[str] = None
+    notes: Optional[str] = None
 
 # Schema for deleting a Problem
 class ProblemDelete(BaseModel):
     title: str
 
+# Schema for Response
+class ProblemResponse(BaseModel):
+    id: int
+    title: str
+    difficulty: DifficultyLevel
+    description: str
+    url: HttpUrl
+    dateSolved: Optional[date] = None
+    solution: Optional[str] = None
+    notes: Optional[str] = None
+
+    class Config:
+        orm_mode = True

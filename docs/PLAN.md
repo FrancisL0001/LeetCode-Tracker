@@ -18,6 +18,7 @@ type Difficulty = "Easy" | "Medium" | "Hard";
 - Problem: This is the most basic unit of the tracker, it will contain the following information:
     - Title: the title of the problem
     - Difficulty: the difficulty of the problem
+    - Description: A brief description of the problem (e.g. "Given an array of integers, return the indices of the two numbers that add up to a specific target.")
     - URL: the URL to the problem on LeetCode
     - Date Solved: the date that I solved the problem
     - Solution: a string input of the solution method and a link to my solution (e.g. a GitHub gist, a blog post, etc.)
@@ -27,18 +28,18 @@ type Difficulty = "Easy" | "Medium" | "Hard";
 interface Problem {
     title: string;
     difficulty: Difficulty;
-    description: string; // A brief description of the problem (e.g. "Given an array of integers, return the indices of the two numbers that add up to a specific target.")
+    description: string;  
     url: string;
     dateSolved: Date;
-    solution: string; // This could be a link to a GitHub gist, a blog post, etc.
-    notes: string; // Any notes that I want to keep about the problem (e.g. what I learned, what I struggled with, etc.)
+    solution: string;  
+    notes: string;  
 }
 ```
 - Problems: This is just a list/array of problems.
 - Tracker: This is the main class that will contain the list of problems and any methods to manipulate the list (e.g. add a problem, remove a problem, etc.)
 
 ```typescript
-class Tracker {
+class Tracker { // This will probably exist for a cache on the frontend
     problems: Problem[];
 
     constructor() {
