@@ -56,10 +56,13 @@ def create_problem(problem: ProblemCreate, db: Session = Depends(get_db)):
 
 # Get all problems
 @app.get("/problems/", response_model=List[ProblemResponse])
-def read_problems(title: Optional[str] = None, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_problems(title: Optional[str] = None, topic: Optional[str] = None, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     query = db.query(Problem)
     if title:
         query = query.filter(Problem.title.ilike(f"%{title}%"))
+    if topic:
+        query = query.filter(Problem.topic == topic)
+    
     problems = query.offset(skip).limit(limit).all()
     return problems
 

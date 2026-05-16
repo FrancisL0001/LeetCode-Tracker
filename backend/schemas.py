@@ -18,6 +18,7 @@ class DifficultyLevel(str, Enum):
 class ProblemCreate(BaseModel):
     title: str
     difficulty: DifficultyLevel
+    topic : str
     description: str
     url: HttpUrl
     dateSolved: Optional[date] = None
@@ -28,6 +29,7 @@ class ProblemCreate(BaseModel):
 class ProblemUpdate(BaseModel):
     title : str
     difficulty: Optional[DifficultyLevel] = None
+    topic : Optional[str] = None
     description: Optional[str] = None
     url: Optional[HttpUrl] = None
     dateSolved: Optional[date] = None
@@ -42,6 +44,7 @@ class ProblemDelete(BaseModel):
 class ProblemResponse(BaseModel):
     id: int
     title: str
+    topic: str
     difficulty: DifficultyLevel
     description: str
     url: HttpUrl
