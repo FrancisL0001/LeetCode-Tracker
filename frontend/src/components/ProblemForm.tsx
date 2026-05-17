@@ -27,6 +27,7 @@ export function ProblemForm(props: ProblemFormProps) {
   const [url, setUrl] = useState(initial?.url ?? '')
   const [difficulty, setDifficulty] = useState<Difficulty>(initial?.difficulty ?? 'Easy')
   const [topic, setTopic] = useState(initial?.topic ?? '')
+  const [solution, setSolution] = useState(initial?.solution ?? '')
   const [dateSolved, setDateSolved] = useState(initial?.dateSolved ?? '')
   const [notes, setNotes] = useState(initial?.notes ?? '')
   const [submitting, setSubmitting] = useState(false)
@@ -44,12 +45,14 @@ export function ProblemForm(props: ProblemFormProps) {
           url,
           difficulty,
           topic,
+          solution,
           dateSolved: dateSolved || null,
           notes: notes || null,
         })
       } else {
         await props.onSubmit({
           difficulty,
+          solution: solution || undefined,
           notes: notes || null,
           dateSolved: dateSolved || null,
           topic,
@@ -96,6 +99,13 @@ export function ProblemForm(props: ProblemFormProps) {
             <label htmlFor="topic" className={labelClass}>Topic</label>
             <input id="topic" type="text" value={topic} onChange={e => setTopic(e.target.value)} className={fieldClass} placeholder="Array" required />
           </div>
+        </div>
+
+        <div>
+          <label htmlFor="solution" className={labelClass}>
+            Solution{props.mode === 'add' && <span className="text-red-400 ml-0.5">*</span>}
+          </label>
+          <textarea id="solution" value={solution} onChange={e => setSolution(e.target.value)} className={`${fieldClass} resize-none`} rows={2} placeholder="Approach description or link to solution (e.g. GitHub Gist)" required={props.mode === 'add'} />
         </div>
 
         <div>

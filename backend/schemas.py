@@ -21,8 +21,8 @@ class ProblemCreate(BaseModel):
     topic : str
     description: str
     url: HttpUrl
+    solution: str
     dateSolved: Optional[date] = None
-    solution: Optional[str] = None
     notes: Optional[str] = None
 
 # Schema for Updating a Problem
@@ -48,12 +48,11 @@ class ProblemResponse(BaseModel):
     difficulty: DifficultyLevel
     description: str
     url: HttpUrl
+    solution: str
     dateSolved: Optional[date] = None
-    solution: Optional[str] = None
     notes: Optional[str] = None
 
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}
 
 # Schema for Stats Response
 class StatsResponse(BaseModel):

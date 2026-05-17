@@ -10,9 +10,9 @@ const PROBLEM: Problem = {
   url: 'https://leetcode.com/problems/two-sum/',
   difficulty: 'Easy',
   topic: 'Array',
+  solution: 'Hash map for O(n) lookup.',
   dateSolved: '2024-01-15',
   notes: 'Use a hashmap for O(n) time.',
-  solution: null,
 }
 
 describe('ProblemCard', () => {
@@ -60,6 +60,11 @@ describe('ProblemCard', () => {
   it('does not render notes section when notes is null', () => {
     render(<ProblemCard problem={{ ...PROBLEM, notes: null }} onEdit={vi.fn()} onDelete={vi.fn()} />)
     expect(screen.queryByText(/Use a hashmap/i)).not.toBeInTheDocument()
+  })
+
+  it('renders solution', () => {
+    render(<ProblemCard problem={PROBLEM} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    expect(screen.getByText('Hash map for O(n) lookup.')).toBeInTheDocument()
   })
 
   it('calls onEdit with the problem when edit button is clicked', async () => {

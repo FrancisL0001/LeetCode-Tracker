@@ -10,9 +10,9 @@ const PROBLEMS: Problem[] = [
     url: 'https://leetcode.com/problems/two-sum/',
     difficulty: 'Easy',
     topic: 'Array',
+    solution: 'Hash map for O(n) lookup.',
     dateSolved: '2024-01-15',
     notes: null,
-    solution: null,
   },
   {
     title: 'Add Two Numbers',
@@ -20,9 +20,9 @@ const PROBLEMS: Problem[] = [
     url: 'https://leetcode.com/problems/add-two-numbers/',
     difficulty: 'Medium',
     topic: 'Linked List',
+    solution: 'Iterative carry approach.',
     dateSolved: null,
     notes: null,
-    solution: null,
   },
 ]
 

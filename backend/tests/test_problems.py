@@ -17,14 +17,16 @@ class TestCreateProblem:
         assert "id" in data
 
     def test_create_optional_fields_absent(self, client):
-        # dateSolved and notes are nullable; solution is NOT NULL in the model
-        # so it must always be provided (known schema inconsistency)
         payload = {k: v for k, v in PROBLEM_EASY.items() if k not in ("dateSolved", "notes")}
         response = client.post("/problems/", json=payload)
         assert response.status_code == 200
         data = response.json()
         assert data["dateSolved"] is None
         assert data["notes"] is None
+
+    def test_create_missing_solution(self, client):
+        payload = {k: v for k, v in PROBLEM_EASY.items() if k != "solution"}
+        assert client.post("/problems/", json=payload).status_code == 422
 
     def test_create_missing_title(self, client):
         payload = {k: v for k, v in PROBLEM_EASY.items() if k != "title"}

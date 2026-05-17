@@ -58,6 +58,11 @@ export function ProblemCard({ problem, onEdit, onDelete }: ProblemCardProps) {
         )}
       </div>
 
+      <div className="mt-3 border-t border-surface pt-3 space-y-1.5">
+        <p className="text-xs font-medium text-text-muted">Solution</p>
+        <p className="text-xs text-text-muted">{problem.solution}</p>
+      </div>
+
       {problem.notes && (
         <p className="mt-3 text-xs text-text-muted italic border-t border-surface pt-3">{problem.notes}</p>
       )}

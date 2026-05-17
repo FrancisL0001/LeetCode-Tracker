@@ -6,9 +6,9 @@ export interface Problem {
   url: string
   difficulty: Difficulty
   topic: string
+  solution: string
   dateSolved: string | null
   notes: string | null
-  solution: string | null
 }
 
 export interface ProblemCreate {
@@ -17,9 +17,9 @@ export interface ProblemCreate {
   url: string
   difficulty: Difficulty
   topic: string
+  solution: string
   dateSolved?: string | null
   notes?: string | null
-  solution?: string | null
 }
 
 export interface ProblemUpdate {

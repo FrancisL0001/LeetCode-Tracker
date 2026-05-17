@@ -10,19 +10,20 @@ const PROBLEM: Problem = {
   url: 'https://leetcode.com/problems/two-sum/',
   difficulty: 'Easy',
   topic: 'Array',
+  solution: 'Hash map for O(n) lookup.',
   dateSolved: '2024-01-15',
   notes: 'Use a hashmap.',
-  solution: null,
 }
 
 describe('ProblemForm — add mode', () => {
-  it('renders title, description, url, difficulty, topic fields', () => {
+  it('renders title, description, url, difficulty, topic, solution fields', () => {
     render(<ProblemForm mode="add" onSubmit={vi.fn()} onCancel={vi.fn()} />)
     expect(screen.getByLabelText(/title/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/description/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/url/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/difficulty/i)).toBeInTheDocument()
     expect(screen.getByLabelText(/topic/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/solution/i)).toBeInTheDocument()
   })
 
   it('renders Add Problem submit button', () => {
@@ -38,12 +39,14 @@ describe('ProblemForm — add mode', () => {
     await userEvent.type(screen.getByLabelText(/description/i), 'Find two numbers')
     await userEvent.type(screen.getByLabelText(/url/i), 'https://leetcode.com/problems/two-sum/')
     await userEvent.type(screen.getByLabelText(/topic/i), 'Array')
+    await userEvent.type(screen.getByLabelText(/solution/i), 'Hash map')
     await userEvent.click(screen.getByRole('button', { name: /add problem/i }))
 
     await waitFor(() => expect(onSubmit).toHaveBeenCalledOnce())
     const args = onSubmit.mock.calls[0][0]
     expect(args.title).toBe('Two Sum')
     expect(args.topic).toBe('Array')
+    expect(args.solution).toBe('Hash map')
   })
 
   it('calls onCancel when Cancel button is clicked', async () => {
@@ -61,6 +64,7 @@ describe('ProblemForm — add mode', () => {
     await userEvent.type(screen.getByLabelText(/description/i), 'desc')
     await userEvent.type(screen.getByLabelText(/url/i), 'https://leetcode.com/problems/two-sum/')
     await userEvent.type(screen.getByLabelText(/topic/i), 'Array')
+    await userEvent.type(screen.getByLabelText(/solution/i), 'Hash map')
     await userEvent.click(screen.getByRole('button', { name: /add problem/i }))
 
     await waitFor(() => expect(screen.getByText(/409: Conflict/i)).toBeInTheDocument())
@@ -75,6 +79,7 @@ describe('ProblemForm — add mode', () => {
     await userEvent.type(screen.getByLabelText(/description/i), 'D')
     await userEvent.type(screen.getByLabelText(/url/i), 'https://leetcode.com/problems/t/')
     await userEvent.type(screen.getByLabelText(/topic/i), 'X')
+    await userEvent.type(screen.getByLabelText(/solution/i), 'S')
     await userEvent.click(screen.getByRole('button', { name: /add problem/i }))
 
     expect(screen.getByRole('button', { name: /saving/i })).toBeDisabled()
@@ -92,6 +97,7 @@ describe('ProblemForm — edit mode', () => {
     render(<ProblemForm mode="edit" problem={PROBLEM} onSubmit={vi.fn()} onCancel={vi.fn()} />)
     expect(screen.getByLabelText(/difficulty/i)).toHaveValue('Easy')
     expect(screen.getByLabelText(/topic/i)).toHaveValue('Array')
+    expect(screen.getByLabelText(/solution/i)).toHaveValue('Hash map for O(n) lookup.')
     expect(screen.getByLabelText(/notes/i)).toHaveValue('Use a hashmap.')
   })
 

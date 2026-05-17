@@ -16,6 +16,7 @@ pytest tests/ -v
 | `model.py:31` | `Column(DifficultyLevel, ...)` passed a Python enum class directly to SQLAlchemy — only TypeEngine instances are valid | Changed to `Column(String, ...)` |
 | `app.py:51` | `model_dump()` returns `Url` and enum member objects that sqlite3/psycopg2 can't bind | Changed to `model_dump(mode='json')` in both create and update handlers |
 | `app.py:52` | No `IntegrityError` handling — duplicate title or URL silently returned 500 | Added explicit 409 response |
+| `schemas.py` | `solution` was `Optional[str] = None` in `ProblemCreate` and `ProblemResponse` despite the column being `NOT NULL` in the model — omitting it on create would cause a DB-level error | Changed to `solution: str` (required) in both schemas |
 
 ---
 
@@ -34,6 +35,7 @@ pytest tests/ -v
 | `test_create_missing_topic` | Omitting `topic` returns 422 | Same as above |
 | `test_create_missing_description` | Omitting `description` returns 422 | Same as above |
 | `test_create_missing_url` | Omitting `url` returns 422 | Same as above |
+| `test_create_missing_solution` | Omitting `solution` returns 422 | `solution` is `NOT NULL` in the model and required in the schema; omitting it must be rejected before it reaches the DB |
 | `test_create_invalid_difficulty` | Sending `difficulty: "Legendary"` returns 422 | Only "Easy", "Medium", "Hard" are valid; anything else should be rejected at validation |
 | `test_create_invalid_url` | Sending `url: "not-a-url"` returns 422 | Pydantic's `HttpUrl` must reject non-URL strings |
 | `test_create_duplicate_title` | Inserting the same title twice returns 409 | The `title` column has a unique constraint; the API should surface this as a conflict, not a 500 |

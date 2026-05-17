@@ -7,9 +7,9 @@ const PROBLEM = {
   url: 'https://leetcode.com/problems/two-sum/',
   difficulty: 'Easy' as const,
   topic: 'Array',
+  solution: 'Hash map for O(n) lookup.',
   dateSolved: '2024-01-15',
   notes: null,
-  solution: null,
 }
 
 const STATS = {

@@ -15,7 +15,7 @@ if __name__ == "__main__":
     print("🚀 Starting LeetCode Tracker API...")
     print("📝 Docs available at: http://localhost:8000/docs")
     host = os.getenv("HOST", "0.0.0.0")
-    port = os.getenv("PORT", 8000)
+    port = int(os.getenv("PORT", "8000"))
     reload = os.getenv("ENVIRONMENT", "development") == "development"
 
     uvicorn.run(
