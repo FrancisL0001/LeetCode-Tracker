@@ -153,3 +153,16 @@ npm test
 | [`docs/BACKEND_TESTING.md`](docs/BACKEND_TESTING.md) | Per-test breakdown for the backend suite |
 | [`docs/FRONTEND_TESTING.md`](docs/FRONTEND_TESTING.md) | Per-test breakdown for the frontend suite |
 | [`docs/General_Testing_Plan.md`](docs/General_Testing_Plan.md) | Overall testing strategy and known gaps |
+
+---
+
+## What's next
+
+The next version will turn this from a personal tool into a multi-user platform:
+
+- **User accounts** — sign up, log in, and keep your problem history private to your account
+- **Progress over time** — charts showing problems solved per week and streaks by difficulty
+- **Tags** — attach multiple tags to a problem beyond the single topic field (e.g. `two-pointer`, `binary search`, `interview`)
+- **LeetCode integration** — pull problem metadata automatically from LeetCode so you don't have to fill in the title, description, and URL by hand
+
+See [`docs/PLAN.md`](docs/PLAN.md) for the full design notes.
