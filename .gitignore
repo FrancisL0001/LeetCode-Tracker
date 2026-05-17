@@ -28,3 +28,6 @@ Thumbs.db
 # IDE
 .idea/
 .vscode/
+
+# Claude UI Skills
+*.claude
