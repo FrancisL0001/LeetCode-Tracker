@@ -1,5 +1,7 @@
 # LeetCode Tracker
 
+**Live:** https://leet-code-tracker-5vvm.vercel.app
+
 A personal progress tracker for LeetCode problems. Log each problem you solve, keep notes on your approach, and see how your practice is distributed across difficulties and topics over time.
 
 ---
@@ -16,6 +18,22 @@ Grinding LeetCode without a record makes it hard to know what you've actually co
 - **Browse and filter** — search by title or filter by topic across your full history
 - **Track stats** — total solved, breakdown by difficulty (Easy / Medium / Hard), and top topics; filterable by topic and date range
 - **Edit and delete** — update your solution notes or difficulty after the fact, or remove a record entirely
+
+---
+
+## Screenshots
+
+**Dashboard** — stats panel, filter bar, and problem cards
+
+![Dashboard](assets/base_page.png)
+
+**Adding a problem** — modal form with all required fields
+
+![Add problem modal](assets/add_problem_screen.png)
+
+**After adding** — stats and list update immediately
+
+![Dashboard after adding a problem](assets/after_adding_problem.png)
 
 ---
 
