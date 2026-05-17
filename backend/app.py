@@ -36,10 +36,11 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://leet-code-tracker-5vvm.vercel.app/",
         "http://localhost:5173",   # Vite dev server default
         "http://localhost:3000",
     ],
+    # Covers production + all Vercel preview URLs (branch and deployment previews)
+    allow_origin_regex=r"https://leet-code-tracker[\w-]*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
