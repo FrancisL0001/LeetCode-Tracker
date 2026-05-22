@@ -143,6 +143,8 @@ pytest tests/ -v
 npm test
 ```
 
+CI runs these checks on every push to `main` and every pull request targeting `main`. The frontend job also runs the production build.
+
 ---
 
 ## Docs
@@ -153,6 +155,7 @@ npm test
 | [`docs/BACKEND_TESTING.md`](docs/BACKEND_TESTING.md) | Per-test breakdown for the backend suite |
 | [`docs/FRONTEND_TESTING.md`](docs/FRONTEND_TESTING.md) | Per-test breakdown for the frontend suite |
 | [`docs/General_Testing_Plan.md`](docs/General_Testing_Plan.md) | Overall testing strategy and known gaps |
+| [`testing.md`](testing.md) | CI regression gate and long-term testing strategy |
 
 ---
 

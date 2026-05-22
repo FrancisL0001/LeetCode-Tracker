@@ -105,7 +105,8 @@ export function ProblemForm(props: ProblemFormProps) {
           <label htmlFor="solution" className={labelClass}>
             Solution{props.mode === 'add' && <span className="text-red-400 ml-0.5">*</span>}
           </label>
-          <textarea id="solution" value={solution} onChange={e => setSolution(e.target.value)} className={`${fieldClass} resize-none`} rows={2} placeholder="Approach description or link to solution (e.g. GitHub Gist)" required={props.mode === 'add'} />
+          <textarea id="solution" value={solution} onChange={e => setSolution(e.target.value)} className={`${fieldClass} resize-y font-mono`} rows={6} placeholder={"```python\ndef twoSum(nums, target):\n    seen = {}\n    for i, n in enumerate(nums):\n        if target - n in seen:\n            return [seen[target - n], i]\n        seen[n] = i\n```"} required={props.mode === 'add'} />
+          <p className="mt-1 text-xs text-text-muted">Wrap code in triple backticks with the language name — e.g. <code className="bg-surface px-1 rounded">```python</code></p>
         </div>
 
         <div>

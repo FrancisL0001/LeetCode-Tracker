@@ -1,4 +1,7 @@
 import { ExternalLink, Pencil, Trash2 } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Badge } from './ui/Badge'
 import type { Problem } from '../models/problem'
 
@@ -60,7 +63,32 @@ export function ProblemCard({ problem, onEdit, onDelete }: ProblemCardProps) {
 
       <div className="mt-3 border-t border-surface pt-3 space-y-1.5">
         <p className="text-xs font-medium text-text-muted">Solution</p>
-        <p className="text-xs text-text-muted">{problem.solution}</p>
+        <div className="prose-solution text-xs text-text-muted">
+          <ReactMarkdown
+            components={{
+              code({ className, children }) {
+                const match = /language-(\w+)/.exec(className || '')
+                return match ? (
+                  <SyntaxHighlighter
+                    style={vscDarkPlus}
+                    language={match[1]}
+                    PreTag="div"
+                    customStyle={{ borderRadius: '0.5rem', fontSize: '0.75rem', margin: 0 }}
+                  >
+                    {String(children).replace(/\n$/, '')}
+                  </SyntaxHighlighter>
+                ) : (
+                  <code className="bg-surface px-1 py-0.5 rounded text-accent">{children}</code>
+                )
+              },
+              p({ children }) {
+                return <p className="text-xs text-text-muted mb-1 last:mb-0">{children}</p>
+              },
+            }}
+          >
+            {problem.solution}
+          </ReactMarkdown>
+        </div>
       </div>
 
       {problem.notes && (
