@@ -67,6 +67,16 @@ describe('ProblemCard', () => {
     expect(screen.getByText('Hash map for O(n) lookup.')).toBeInTheDocument()
   })
 
+  it('keeps solution content inside a fixed scrollable region', () => {
+    render(<ProblemCard problem={{ ...PROBLEM, solution: 'Line\n\n'.repeat(40) }} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    expect(screen.getByLabelText('Solution for Two Sum')).toHaveClass('h-36', 'overflow-y-auto')
+  })
+
+  it('keeps notes content inside a fixed scrollable region', () => {
+    render(<ProblemCard problem={{ ...PROBLEM, notes: 'Long note. '.repeat(80) }} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    expect(screen.getByLabelText('Notes for Two Sum')).toHaveClass('h-20', 'overflow-y-auto')
+  })
+
   it('calls onEdit with the problem when edit button is clicked', async () => {
     const onEdit = vi.fn()
     render(<ProblemCard problem={PROBLEM} onEdit={onEdit} onDelete={vi.fn()} />)

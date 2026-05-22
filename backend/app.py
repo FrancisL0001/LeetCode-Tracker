@@ -37,6 +37,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",   # Vite dev server default
+        "http://localhost:5174",
         "http://localhost:3000",
     ],
     # Covers production + all Vercel preview URLs (branch and deployment previews)
