@@ -9,3 +9,4 @@ uvicorn
 typing
 requests
 datetime
+httpx
