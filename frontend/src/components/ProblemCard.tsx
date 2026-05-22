@@ -13,8 +13,8 @@ interface ProblemCardProps {
 
 export function ProblemCard({ problem, onEdit, onDelete }: ProblemCardProps) {
   return (
-    <article className="bg-card rounded-xl p-5 border border-surface hover:border-accent/40 transition-colors duration-200 cursor-pointer group">
-      <div className="flex items-start justify-between gap-3">
+    <article className="h-[32rem] bg-card rounded-xl p-5 border border-surface hover:border-accent/40 transition-colors duration-200 cursor-pointer group flex flex-col overflow-hidden">
+      <div className="flex items-start justify-between gap-3 shrink-0">
         <div className="min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <h3 className="text-base font-semibold text-text truncate">{problem.title}</h3>
@@ -40,9 +40,9 @@ export function ProblemCard({ problem, onEdit, onDelete }: ProblemCardProps) {
         </div>
       </div>
 
-      <p className="mt-3 text-sm text-text-muted line-clamp-2">{problem.description}</p>
+      <p className="mt-3 h-11 text-sm text-text-muted line-clamp-2 shrink-0">{problem.description}</p>
 
-      <div className="mt-4 flex items-center justify-between gap-2">
+      <div className="mt-4 flex items-center justify-between gap-2 shrink-0">
         <a
           href={problem.url}
           target="_blank"
@@ -61,9 +61,12 @@ export function ProblemCard({ problem, onEdit, onDelete }: ProblemCardProps) {
         )}
       </div>
 
-      <div className="mt-3 border-t border-surface pt-3 space-y-1.5">
+      <div className="mt-3 border-t border-surface pt-3 space-y-1.5 shrink-0">
         <p className="text-xs font-medium text-text-muted">Solution</p>
-        <div className="prose-solution text-xs text-text-muted">
+        <div
+          className="prose-solution h-36 overflow-y-auto rounded-lg bg-bg/40 p-3 text-xs text-text-muted"
+          aria-label={`Solution for ${problem.title}`}
+        >
           <ReactMarkdown
             components={{
               code({ className, children }) {
@@ -92,7 +95,15 @@ export function ProblemCard({ problem, onEdit, onDelete }: ProblemCardProps) {
       </div>
 
       {problem.notes && (
-        <p className="mt-3 text-xs text-text-muted italic border-t border-surface pt-3">{problem.notes}</p>
+        <div className="mt-3 border-t border-surface pt-3 shrink-0">
+          <p className="text-xs font-medium text-text-muted">Notes</p>
+          <p
+            className="mt-1.5 h-20 overflow-y-auto rounded-lg bg-bg/40 p-3 text-xs text-text-muted italic"
+            aria-label={`Notes for ${problem.title}`}
+          >
+            {problem.notes}
+          </p>
+        </div>
       )}
     </article>
   )
