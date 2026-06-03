@@ -74,7 +74,7 @@ def read_problems(title: Optional[str] = None, topic: Optional[str] = None, skip
     if title:
         query = query.filter(Problem.title.ilike(f"%{title}%"))
     if topic:
-        query = query.filter(Problem.topic == topic)
+        query = query.filter(Problem.topic.ilike(f"%{topic}%"))
     
     problems = query.offset(skip).limit(limit).all()
     return problems
