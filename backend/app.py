@@ -130,7 +130,10 @@ def get_stats(
     for p in problems:
         # dateSolved is stored as a string in the DB, so date comparisons above are lexicographic (safe for ISO format)
         by_difficulty[p.difficulty] += 1
-        by_topic[p.topic] = by_topic.get(p.topic, 0) + 1
+        if p.topic not in by_topic:
+            # Pre-populate all difficulty levels per topic so the frontend always gets a consistent shape
+            by_topic[p.topic] = {level.value: 0 for level in DifficultyLevel}
+        by_topic[p.topic][p.difficulty] += 1
 
     return StatsResponse(
         totalProblems=len(problems),

@@ -6,11 +6,12 @@ interface ProblemListProps {
   problems: Problem[]
   loading: boolean
   error: string | null
+  onView: (problem: Problem) => void
   onEdit: (problem: Problem) => void
   onDelete: (title: string) => void
 }
 
-export function ProblemList({ problems, loading, error, onEdit, onDelete }: ProblemListProps) {
+export function ProblemList({ problems, loading, error, onView, onEdit, onDelete }: ProblemListProps) {
   if (loading) {
     return (
       <div className="flex justify-center py-16">
@@ -38,7 +39,7 @@ export function ProblemList({ problems, loading, error, onEdit, onDelete }: Prob
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
       {problems.map(p => (
-        <ProblemCard key={p.title} problem={p} onEdit={onEdit} onDelete={onDelete} />
+        <ProblemCard key={p.title} problem={p} onView={onView} onEdit={onEdit} onDelete={onDelete} />
       ))}
     </div>
   )

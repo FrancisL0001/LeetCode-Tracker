@@ -26,35 +26,38 @@ const PROBLEMS: Problem[] = [
   },
 ]
 
+const list = (props = {}) =>
+  <ProblemList problems={PROBLEMS} loading={false} error={null} onView={vi.fn()} onEdit={vi.fn()} onDelete={vi.fn()} {...props} />
+
 describe('ProblemList', () => {
   it('shows a loading spinner when loading', () => {
-    render(<ProblemList problems={[]} loading={true} error={null} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    render(<ProblemList problems={[]} loading={true} error={null} onView={vi.fn()} onEdit={vi.fn()} onDelete={vi.fn()} />)
     expect(screen.getByRole('status')).toBeInTheDocument()
   })
 
   it('shows error message when error is present', () => {
-    render(<ProblemList problems={[]} loading={false} error="Network error" onEdit={vi.fn()} onDelete={vi.fn()} />)
+    render(<ProblemList problems={[]} loading={false} error="Network error" onView={vi.fn()} onEdit={vi.fn()} onDelete={vi.fn()} />)
     expect(screen.getByText(/Network error/i)).toBeInTheDocument()
   })
 
   it('shows empty state message when no problems', () => {
-    render(<ProblemList problems={[]} loading={false} error={null} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    render(<ProblemList problems={[]} loading={false} error={null} onView={vi.fn()} onEdit={vi.fn()} onDelete={vi.fn()} />)
     expect(screen.getByText(/No problems found/i)).toBeInTheDocument()
   })
 
   it('renders all problem cards', () => {
-    render(<ProblemList problems={PROBLEMS} loading={false} error={null} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    render(list())
     expect(screen.getByText('Two Sum')).toBeInTheDocument()
     expect(screen.getByText('Add Two Numbers')).toBeInTheDocument()
   })
 
   it('does not show spinner when not loading', () => {
-    render(<ProblemList problems={PROBLEMS} loading={false} error={null} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    render(list())
     expect(screen.queryByRole('status')).not.toBeInTheDocument()
   })
 
   it('does not show error state when error is null', () => {
-    render(<ProblemList problems={PROBLEMS} loading={false} error={null} onEdit={vi.fn()} onDelete={vi.fn()} />)
+    render(list())
     expect(screen.queryByText(/Network error/i)).not.toBeInTheDocument()
   })
 })
