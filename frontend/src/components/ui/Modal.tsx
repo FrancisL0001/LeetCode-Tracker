@@ -5,9 +5,10 @@ interface ModalProps {
   title: string
   onClose: () => void
   children: React.ReactNode
+  wide?: boolean
 }
 
-export function Modal({ title, onClose, children }: ModalProps) {
+export function Modal({ title, onClose, children, wide = false }: ModalProps) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', onKey)
@@ -22,8 +23,8 @@ export function Modal({ title, onClose, children }: ModalProps) {
       aria-labelledby="modal-title"
     >
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-lg bg-card rounded-2xl shadow-2xl border border-surface">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-surface">
+      <div className={`relative z-10 w-full ${wide ? 'max-w-2xl' : 'max-w-lg'} max-h-[90vh] flex flex-col bg-card rounded-2xl shadow-2xl border border-surface`}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-surface shrink-0">
           <h2 id="modal-title" className="text-lg font-semibold text-text">{title}</h2>
           <button
             onClick={onClose}
@@ -33,7 +34,7 @@ export function Modal({ title, onClose, children }: ModalProps) {
             <X size={18} />
           </button>
         </div>
-        <div className="px-6 py-5">{children}</div>
+        <div className="px-6 py-5 overflow-y-auto">{children}</div>
       </div>
     </div>
   )

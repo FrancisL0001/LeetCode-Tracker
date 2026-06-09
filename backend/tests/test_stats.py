@@ -36,13 +36,14 @@ class TestStats:
         assert data["problemsByDifficulty"]["Hard"] == 0
 
     def test_topic_breakdown_accurate(self, client):
-        client.post("/problems/", json=PROBLEM_EASY)
-        client.post("/problems/", json=PROBLEM_MEDIUM)
-        client.post("/problems/", json=PROBLEM_HARD)
+        client.post("/problems/", json=PROBLEM_EASY)    # Array / Easy
+        client.post("/problems/", json=PROBLEM_MEDIUM)  # Dynamic Programming / Medium
+        client.post("/problems/", json=PROBLEM_HARD)    # Linked List / Hard
         data = client.get("/problems/stats").json()
-        assert data["problemsByTopic"]["Array"] == 1
-        assert data["problemsByTopic"]["Dynamic Programming"] == 1
-        assert data["problemsByTopic"]["Linked List"] == 1
+        assert data["problemsByTopic"]["Array"]["Easy"] == 1
+        assert data["problemsByTopic"]["Array"]["Medium"] == 0
+        assert data["problemsByTopic"]["Dynamic Programming"]["Medium"] == 1
+        assert data["problemsByTopic"]["Linked List"]["Hard"] == 1
 
     def test_filter_by_topic(self, client):
         client.post("/problems/", json=PROBLEM_EASY)    # Array

@@ -6,6 +6,7 @@ import { ProblemList } from './components/ProblemList'
 import { FilterBar } from './components/FilterBar'
 import { StatsPanel } from './components/StatsPanel'
 import { ProblemForm } from './components/ProblemForm'
+import { ProblemDetail } from './components/ProblemDetail'
 import { Modal } from './components/ui/Modal'
 import type { Problem } from './models/problem'
 
@@ -13,6 +14,7 @@ export default function App() {
   const problemPresenter = useProblemPresenter()
   const statsPresenter = useStatsPresenter()
   const [showAdd, setShowAdd] = useState(false)
+  const [viewing, setViewing] = useState<Problem | null>(null)
   const [editing, setEditing] = useState<Problem | null>(null)
 
   const handleDelete = async (title: string) => {
@@ -62,6 +64,7 @@ export default function App() {
             problems={problemPresenter.problems}
             loading={problemPresenter.loading}
             error={problemPresenter.error}
+            onView={setViewing}
             onEdit={setEditing}
             onDelete={handleDelete}
           />
@@ -72,6 +75,14 @@ export default function App() {
         <Modal title="Add Problem" onClose={() => setShowAdd(false)}>
           <ProblemForm mode="add" onSubmit={handleAdd} onCancel={() => setShowAdd(false)} />
         </Modal>
+      )}
+
+      {viewing && (
+        <ProblemDetail
+          problem={viewing}
+          onClose={() => setViewing(null)}
+          onEdit={() => { setEditing(viewing); setViewing(null) }}
+        />
       )}
 
       {editing && (

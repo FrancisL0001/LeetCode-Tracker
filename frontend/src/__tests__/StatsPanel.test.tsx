@@ -3,10 +3,17 @@ import { render, screen } from '@testing-library/react'
 import { StatsPanel } from '../components/StatsPanel'
 import type { Stats } from '../models/problem'
 
+const topic = (easy: number, medium: number, hard: number) => ({ Easy: easy, Medium: medium, Hard: hard })
+
 const STATS: Stats = {
   totalProblems: 10,
   problemsByDifficulty: { Easy: 5, Medium: 3, Hard: 2 },
-  problemsByTopic: { Array: 4, 'Dynamic Programming': 3, Graph: 2, Tree: 1 },
+  problemsByTopic: {
+    Array: topic(3, 1, 0),
+    'Dynamic Programming': topic(1, 2, 0),
+    Graph: topic(0, 1, 1),
+    Tree: topic(1, 0, 0),
+  },
 }
 
 describe('StatsPanel', () => {
@@ -54,7 +61,7 @@ describe('StatsPanel', () => {
   it('shows at most 5 topics', () => {
     const manyTopics: Stats = {
       ...STATS,
-      problemsByTopic: { A: 6, B: 5, C: 4, D: 3, E: 2, F: 1 },
+      problemsByTopic: { A: topic(6,0,0), B: topic(5,0,0), C: topic(4,0,0), D: topic(3,0,0), E: topic(2,0,0), F: topic(1,0,0) },
     }
     render(<StatsPanel stats={manyTopics} loading={false} error={null} />)
     expect(screen.queryByText('F')).not.toBeInTheDocument()

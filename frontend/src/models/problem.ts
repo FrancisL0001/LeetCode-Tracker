@@ -33,7 +33,7 @@ export interface ProblemUpdate {
 export interface Stats {
   totalProblems: number
   problemsByDifficulty: Record<Difficulty, number>
-  problemsByTopic: Record<string, number>
+  problemsByTopic: Record<string, Record<Difficulty, number>>
 }
 
 export interface ProblemFilters {
